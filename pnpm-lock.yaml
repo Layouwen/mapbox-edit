@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@types/mapbox-gl': ^2.7.5
   '@vitejs/plugin-vue': ^3.0.3
+  prettier: ^2.7.1
   sass: ^1.54.7
   typescript: ^4.6.4
   vite: ^3.0.7
@@ -16,6 +17,7 @@ dependencies:
 devDependencies:
   '@types/mapbox-gl': 2.7.5
   '@vitejs/plugin-vue': 3.0.3_vite@3.0.9+vue@3.2.38
+  prettier: 2.7.1
   typescript: 4.8.2
   vite: 3.0.9_sass@1.54.7
   vue-tsc: 0.39.5_typescript@4.8.2
@@ -536,6 +538,12 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
 
   /readdirp/3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}

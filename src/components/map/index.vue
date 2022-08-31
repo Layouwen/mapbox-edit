@@ -2,6 +2,7 @@
 import mapboxgl from 'mapbox-gl';
 import { defineEmits, defineExpose, onMounted, ref } from 'vue';
 import test1 from '../../assets/mapbox/style/test1';
+import darkDemo from '../../assets/mapbox/style/darkDemo.js'
 
 
 const mapWrapperEl = ref();
@@ -30,8 +31,11 @@ const emit = defineEmits(['onLoad']);
 const initMap = () => {
   const instance = new window.mapboxgl.Map({
     container: 'map',
-    style: test1 as any,
+    // style: test1 as any,
+    style: darkDemo as any,
   });
+  // @ts-ignore
+  window.map = instance
   map.value = instance;
   instance.on('load', () => {
     document.querySelector('.mapboxgl-control-container')?.remove();

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import mapboxgl, { AnyLayer } from 'mapbox-gl';
 import { defineProps, ref, watch } from 'vue';
+import MapEditModal from './map-edit-modal.vue';
 
 const props = defineProps<{
   map?: mapboxgl.Map,
@@ -19,6 +20,7 @@ watch(() => props.map, () => {
 });
 
 const onLayerItem = (layer: AnyLayer) => {
+  selectLayerData.value = {...layer};
 };
 
 const onDisplayLayer = (layer: AnyLayer) => {
@@ -57,6 +59,16 @@ const displayName = (id: string) => {
   return isVisible(id) ? '隐藏' : '显示';
 };
 
+const selectLayerData = ref();
+
+const onClose = () => {
+  selectLayerData.value = null;
+};
+
+const onFieldUpdate = ({field, value}: { field: string, value: any }) => {
+  selectLayerData.value[field] = value;
+};
+
 </script>
 
 <template>
@@ -72,6 +84,7 @@ const displayName = (id: string) => {
       <button @click.stop="onDeleteLayer">删除</button>
     </div>
   </div>
+  <MapEditModal v-if="!!selectLayerData" :data="selectLayerData" @onClose="onClose" @onFieldUpdate="onFieldUpdate" />
 </template>
 
 <style scoped lang="scss">
