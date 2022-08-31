@@ -70,6 +70,16 @@ const displayName = (id: string) => {
 
 const selectLayerData = ref();
 
+const onSave = () => {
+  const map = props.map!;
+  const style = map.getStyle();
+  const index = style.layers.findIndex(
+    (l) => l.id === selectLayerData.value.id
+  );
+  style.layers[index] = selectLayerData.value;
+  map.setStyle(style);
+};
+
 const onClose = () => {
   selectLayerData.value = null;
 };
@@ -77,8 +87,6 @@ const onClose = () => {
 const onFieldUpdate = ({ field, value }: { field: string; value: any }) => {
   selectLayerData.value[field] = value;
 };
-
-const showSource = ref<string[]>([]);
 
 const onDisplaySource = (sourceName: string) => {
   const map = props.map!;
@@ -130,6 +138,7 @@ const sourceDisplayText = (sourceName: string) => {
     <MapEditModal
       v-if="!!selectLayerData"
       :data="selectLayerData"
+      @onSave="onSave"
       @onClose="onClose"
       @onFieldUpdate="onFieldUpdate"
     />
