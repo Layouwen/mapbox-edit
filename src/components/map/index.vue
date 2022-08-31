@@ -2,7 +2,8 @@
 import mapboxgl from 'mapbox-gl';
 import { defineEmits, defineExpose, onMounted, ref } from 'vue';
 import test1 from '../../assets/mapbox/style/test1';
-import darkDemo from '../../assets/mapbox/style/darkDemo.js'
+import darkDemo from '../../assets/mapbox/style/darkDemo'
+import dark from '../../assets/mapbox/style/dark.json'
 
 
 const mapWrapperEl = ref();
@@ -32,7 +33,8 @@ const initMap = () => {
   const instance = new window.mapboxgl.Map({
     container: 'map',
     // style: test1 as any,
-    style: darkDemo as any,
+    // style: darkDemo as any,
+    style: dark as any,
   });
   // @ts-ignore
   window.map = instance
