@@ -7532,7 +7532,7 @@
       "scheme": "xyz",
       "tilejson": "2.2.0",
       "tiles": [
-        "http://lp.locnavi.com:3127/maptiler/api/tiles/maptiler-osm/{z}/{x}/{y}"
+        "https://tdev2.locnavi.com/api/tiles/maptiler-osm/{z}/{x}/{y}"
       ]
     },
     "composite": {
@@ -8097,7 +8097,7 @@
       "scheme": "xyz",
       "tilejson": "2.2.0",
       "tiles": [
-        "http://lp.locnavi.com:3127/maptiler/api/tiles/2017-07-03_asia_china/{z}/{x}/{y}"
+        "https://tdev2.locnavi.com/api/tiles/2017-07-03_asia_china/{z}/{x}/{y}"
       ]
     },
     "centerPoint-source": {
@@ -9238,21 +9238,6 @@
       }
     },
     {
-      "id": "2017-07-03_asia_china_mountain_peak_circle",
-      "type": "circle",
-      "source": "composite",
-      "source-layer": "mountain_peak",
-      "filter": [
-        "==",
-        "$type",
-        "Point"
-      ],
-      "paint": {
-        "circle-color": "rgba(98, 237, 247, 0.8)",
-        "circle-radius": 2
-      }
-    },
-    {
       "id": "2017-07-03_asia_china_mountain_peak_line",
       "type": "line",
       "source": "composite",
@@ -9596,21 +9581,6 @@
       }
     },
     {
-      "id": "2017-07-03_asia_china_place_circle",
-      "type": "circle",
-      "source": "composite",
-      "source-layer": "place",
-      "filter": [
-        "==",
-        "$type",
-        "Point"
-      ],
-      "paint": {
-        "circle-color": "rgba(242, 14, 147, 0.8)",
-        "circle-radius": 2
-      }
-    },
-    {
       "id": "2017-07-03_asia_china_place_line",
       "type": "line",
       "source": "composite",
@@ -9645,21 +9615,6 @@
       }
     },
     {
-      "id": "2017-07-03_asia_china_housenumber_circle",
-      "type": "circle",
-      "source": "composite",
-      "source-layer": "housenumber",
-      "filter": [
-        "==",
-        "$type",
-        "Point"
-      ],
-      "paint": {
-        "circle-color": "rgba(239, 76, 139, 0.8)",
-        "circle-radius": 2
-      }
-    },
-    {
       "id": "2017-07-03_asia_china_housenumber_line",
       "type": "line",
       "source": "composite",
@@ -9691,21 +9646,6 @@
         "fill-color": "rgba(239, 76, 139, 0.3)",
         "fill-antialias": true,
         "fill-outline-color": "rgba(239, 76, 139, 0.3)"
-      }
-    },
-    {
-      "id": "2017-07-03_asia_china_poi_circle",
-      "type": "circle",
-      "source": "composite",
-      "source-layer": "poi",
-      "filter": [
-        "==",
-        "$type",
-        "Point"
-      ],
-      "paint": {
-        "circle-color": "rgba(59, 181, 10, 0.8)",
-        "circle-radius": 2
       }
     },
     {

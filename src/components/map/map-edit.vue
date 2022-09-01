@@ -49,13 +49,24 @@ const onDeleteLayer = (layer: AnyLayer) => {
   }
 };
 
-const refreshLayer = () => {
+const _refreshLayer = (overflow = false) => {
   const map = props.map!;
   const style = map.getStyle();
   style.layers = style.layers.map((layer) => {
     return layer;
   });
+  if (overflow) {
+    style.layers = layers.value as any;
+  }
   map.setStyle(style);
+};
+
+const refreshLayer = () => {
+  _refreshLayer();
+};
+
+const refreshLayerByLayers = () => {
+  _refreshLayer(true);
 };
 
 const isVisible = (id: string) => {
@@ -107,6 +118,39 @@ const isAllVisible = (sourceName: string) => {
 const sourceDisplayText = (sourceName: string) => {
   return isAllVisible(sourceName) ? "隐藏" : "显示";
 };
+
+enum MoveLayerAction {
+  UP,
+  DOWN,
+}
+
+const moveLayer = (layer: Layer, action = MoveLayerAction.UP) => {
+  const index = layers.value.findIndex((l) => l.id === layer.id);
+  const temp = layers.value[index];
+  switch (action) {
+    case MoveLayerAction.UP:
+      if (index === 0) return;
+      layers.value[index] = layers.value[index - 1];
+      layers.value[index - 1] = temp;
+      break;
+    case MoveLayerAction.DOWN:
+      if (index === layers.value.length - 1) return;
+      layers.value[index] = layers.value[index + 1];
+      layers.value[index + 1] = temp;
+      break;
+    default:
+      console.error("MoveLayerAction unknown action");
+  }
+  refreshLayerByLayers();
+};
+
+const onLayerToUp = (layer: Layer) => {
+  moveLayer(layer, MoveLayerAction.UP);
+};
+
+const onLayerToDown = (layer: Layer) => {
+  moveLayer(layer, MoveLayerAction.DOWN);
+};
 </script>
 
 <template>
@@ -129,6 +173,8 @@ const sourceDisplayText = (sourceName: string) => {
         v-for="layer in layers"
       >
         <span class="name">{{ layer.id }}</span>
+        <button @click.stop="onLayerToUp(layer)">向上</button>
+        <button @click.stop="onLayerToDown(layer)">向下</button>
         <button @click.stop="onDisplayLayer(layer)">
           {{ displayName(layer.id) }}
         </button>
