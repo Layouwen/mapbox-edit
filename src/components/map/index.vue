@@ -2,9 +2,11 @@
 import mapboxgl from 'mapbox-gl';
 import { defineEmits, defineExpose, onMounted, ref } from 'vue';
 import test1 from '../../assets/mapbox/style/test1';
+import tileStyle from '../../assets/mapbox/style/tileStyle';
 import darkDemo from '../../assets/mapbox/style/darkDemo'
 import dark from '../../assets/mapbox/style/dark.json'
 
+window.mapboxgl.accessToken = 'pk.eyJ1IjoibGF5b3V3ZW4iLCJhIjoiY2t1bmR0b3M4MmliNjMxdDQweW9yaDJjNyJ9.HuBR7pZ_hqagzwEGOuBROg';
 
 const mapWrapperEl = ref();
 const mapEl = ref<HTMLDivElement>();
@@ -32,9 +34,10 @@ const emit = defineEmits(['onLoad']);
 const initMap = () => {
   const instance = new window.mapboxgl.Map({
     container: 'map',
-    // style: test1 as any,
+    // style: tileStyle as any
+    style: test1 as any,
     // style: darkDemo as any,
-    style: dark as any,
+    // style: dark as any,
   });
   // @ts-ignore
   window.map = instance
