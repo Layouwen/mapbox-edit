@@ -17,6 +17,7 @@ export default defineConfig({
     },
   },
   resolve: {
+    extensions: [".vue", ".ts", ".js"],
     alias: [
       {
         find: "@/components",
