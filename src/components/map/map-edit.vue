@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { systemLog } from "@/utils";
 import mapboxgl, { AnyLayer, Layer } from "mapbox-gl";
 import { defineProps, ref, watch } from "vue";
-import MapEditModal from "./map-edit-modal.vue";
+import MapEditModal from "./map-edit-modal";
 
 const props = defineProps<{ map?: mapboxgl.Map }>();
 const emit = defineEmits(["dataUpdate"]);
@@ -13,14 +14,42 @@ const deleteLayerLayersId = ref<string[]>([]);
 watch(
   () => props.map,
   () => {
-    updateLayersAndSources();
+    init();
     emit("dataUpdate");
   }
 );
 
-const updateLayersAndSources = () => {
+const sourceIdToLayerGroupMap = ref<Map<string, Layer[]>>(new Map());
+
+const clearData = () => {
+  sourceIdToLayerGroupMap.value.clear();
+};
+
+const initSourceIdToLayerGroupMap = (map: mapboxgl.Map) => {
+  clearData();
+  const { layers } = map.getStyle();
+  for (const layer of layers as Layer[]) {
+    const sourceId = layer.source as string;
+    const group = sourceIdToLayerGroupMap.value.get(sourceId);
+    if (group) {
+      group.push(layer);
+    } else {
+      const _group = [] as Layer[];
+      _group.push(layer);
+      sourceIdToLayerGroupMap.value.set(sourceId, _group);
+    }
+  }
+  systemLog("sourceIdToLayerGroupMap init", sourceIdToLayerGroupMap.value);
+};
+
+const init = () => {
   const map = props.map;
   if (!map) return;
+  initSourceIdToLayerGroupMap(map);
+  initLayersAndSources(map);
+};
+
+const initLayersAndSources = (map: mapboxgl.Map) => {
   const style = map.getStyle();
   layers.value = style.layers;
   sources.value = style.sources;
@@ -119,11 +148,6 @@ const sourceDisplayText = (sourceName: string) => {
   return isAllVisible(sourceName) ? "隐藏" : "显示";
 };
 
-enum MoveLayerAction {
-  UP,
-  DOWN,
-}
-
 const moveLayer = (layer: Layer, action = MoveLayerAction.UP) => {
   const index = layers.value.findIndex((l) => l.id === layer.id);
   const temp = layers.value[index];
@@ -151,6 +175,11 @@ const onLayerToUp = (layer: Layer) => {
 const onLayerToDown = (layer: Layer) => {
   moveLayer(layer, MoveLayerAction.DOWN);
 };
+
+enum MoveLayerAction {
+  UP,
+  DOWN,
+}
 </script>
 
 <template>

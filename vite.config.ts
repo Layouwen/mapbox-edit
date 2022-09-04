@@ -20,8 +20,8 @@ export default defineConfig({
     extensions: [".vue", ".ts", ".js"],
     alias: [
       {
-        find: "@/components",
-        replacement: getPath("components"),
+        find: "@",
+        replacement: getPath("./"),
       },
     ],
   },
