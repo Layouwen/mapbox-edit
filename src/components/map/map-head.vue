@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import mapboxgl from "mapbox-gl";
-import { defineProps, onMounted, ref, watch } from "vue";
+import { defineProps, ref, watch } from "vue";
 
 const props = defineProps<{ map?: mapboxgl.Map }>();
 
@@ -30,7 +30,7 @@ const getLngLat = () => {
 };
 </script>
 <template>
-  <div class="wrapper">
+  <div class="h-full flex items-center">
     <t-button @click="getLngLat"
       >{{ isGetLngLat ? "获取中" : "获取坐标" }}
     </t-button>
@@ -40,8 +40,4 @@ const getLngLat = () => {
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.wrapper {
-  display: flex;
-}
-</style>
+<style lang="scss" scoped></style>
