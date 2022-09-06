@@ -10,9 +10,12 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
+    "dnd-core": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "sass": "^1.54.7",
     "tdesign-vue-next": "^0.20.3",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue3-dnd": "^2.0.2"
   },
   "devDependencies": {
     "@types/mapbox-gl": "^2.7.5",
