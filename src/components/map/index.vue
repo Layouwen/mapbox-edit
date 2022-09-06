@@ -21,7 +21,7 @@ const dataUpdate = () => {
 <template>
   <t-layout class="container">
     <t-header>
-      <MapHead />
+      <MapHead :map="mapInstance" />
     </t-header>
     <t-layout>
       <t-content>

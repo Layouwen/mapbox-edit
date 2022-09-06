@@ -41,8 +41,8 @@ const initMap = () => {
     // style: darkDemo as any,
     // style: dark as any,
     // style: test1 as any,
-    // style: epathMapEdit as any,
-    style: tileStyle as any,
+    style: epathMapEdit as any,
+    // style: tileStyle as any,
   });
   // @ts-ignore
   window.map = instance;
@@ -71,7 +71,7 @@ defineExpose({
 
 <style scoped>
 .map-wrapper {
-  /*height: 100%;*/
-  /*width: 100%;*/
+  height: 100%;
+  width: 100%;
 }
 </style>
