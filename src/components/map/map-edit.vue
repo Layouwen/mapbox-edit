@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { DndProvider } from "vue3-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import LayerItem from "@/components/map/layer-item.vue";
 import { systemLog } from "@/utils";
 import mapboxgl, { AnyLayer, Layer } from "mapbox-gl";
 import { defineProps, ref, watch } from "vue";
@@ -180,6 +183,14 @@ enum MoveLayerAction {
   UP,
   DOWN,
 }
+
+const move = (start: number | undefined, end: number) => {
+  if (start === undefined) return;
+  const item = layers.value[start];
+  layers.value.splice(start, 1);
+  layers.value.splice(end, 0, item);
+  refreshLayerByLayers();
+};
 </script>
 
 <template>
@@ -195,20 +206,26 @@ enum MoveLayerAction {
     </div>
     <div>layers</div>
     <div class="layer-item-wrapper">
-      <div
-        class="layer-item"
-        :class="{ 'un-active': !isVisible(layer.id) }"
-        @click="onLayerItem(layer)"
-        v-for="layer in layers"
-      >
-        <span class="name">{{ layer.id }}</span>
-        <button @click.stop="onLayerToUp(layer)">向上</button>
-        <button @click.stop="onLayerToDown(layer)">向下</button>
-        <button @click.stop="onDisplayLayer(layer)">
-          {{ displayName(layer.id) }}
-        </button>
-        <button @click.stop="onDeleteLayer">删除</button>
-      </div>
+      <DndProvider :backend="HTML5Backend">
+        <LayerItem
+          v-for="(layer, index) in layers"
+          :data="layer"
+          :key="layer.id"
+          :index="index"
+          :move="move"
+          :class="{ 'un-active': !isVisible(layer.id) }"
+          @click="onLayerItem(layer)"
+        >
+          <template v-slot:btn>
+            <button @click.stop="onLayerToUp(layer)">向上</button>
+            <button @click.stop="onLayerToDown(layer)">向下</button>
+            <button @click.stop="onDisplayLayer(layer)">
+              {{ displayName(layer.id) }}
+            </button>
+            <button @click.stop="onDeleteLayer">删除</button>
+          </template>
+        </LayerItem>
+      </DndProvider>
     </div>
     <MapEditModal
       v-if="!!selectLayerData"
@@ -229,24 +246,6 @@ enum MoveLayerAction {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    > .layer-item {
-      padding: 4px 10px;
-      display: flex;
-      cursor: pointer;
-      background: azure;
-      &:hover {
-        background: aqua;
-      }
-      &.un-active {
-        background: antiquewhite;
-        > .name {
-          text-decoration: line-through;
-        }
-      }
-      > .name {
-        flex-grow: 1;
-      }
-    }
   }
 }
 </style>

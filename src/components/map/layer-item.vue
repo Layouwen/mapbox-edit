@@ -27,12 +27,12 @@ const [dropCollect, drop] = useDrop<
   { handlerId: Identifier | null }
 >({
   accept: ItemTypes.CARD,
-  collect(monitor) {
+  collect(monitor: any) {
     return {
       handlerId: monitor.getHandlerId(),
     };
   },
-  hover(item: DragItem, monitor) {
+  hover(item: DragItem, monitor: any) {
     if (!card.value) {
       return;
     }
@@ -67,7 +67,7 @@ const [dropCollect, drop] = useDrop<
 const [, drag] = useDrag({
   type: ItemTypes.CARD,
   item: { ...props.data, index: props.index },
-  collect: (monitor) => ({ isDragging: monitor.isDragging() }),
+  collect: (monitor: any) => ({ isDragging: monitor.isDragging() }),
 });
 
 const setRef = (el: HTMLDivElement) => {
@@ -81,14 +81,28 @@ const setRef = (el: HTMLDivElement) => {
     :ref="setRef"
     :data-handler-id="dropCollect.handlerId"
   >
-    {{ data.id }}
+    <span class="name">{{ data.id }}</span>
+    <slot name="btn"></slot>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .layer-item {
-  width: 100px;
-  height: 100px;
-  border: 1px solid red;
+  padding: 4px 10px;
+  display: flex;
+  cursor: pointer;
+  background: azure;
+  &:hover {
+    background: aqua;
+  }
+  &.un-active {
+    background: antiquewhite;
+    > .name {
+      text-decoration: line-through;
+    }
+  }
+  > .name {
+    flex-grow: 1;
+  }
 }
 </style>
